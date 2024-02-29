@@ -36,6 +36,14 @@ public class PMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 pos = transform.position;
+        pos.z = 0;
+        transform.position = pos;
+
+        Quaternion rz = transform.rotation;
+        rz.z = 0;
+        transform.rotation = rz;
+
         horizontal = Input.GetAxisRaw("Horizontal");
 
         if(Input.GetButtonDown("Jump") && isGrounded())
@@ -136,5 +144,10 @@ public class PMovement : MonoBehaviour
     private void StopWallJumping()
     {
         isWallJumping= false;
+    }
+
+    public bool canAttack()
+    {
+        return horizontal == 0 && isGrounded() && !isWalled();
     }
 }
