@@ -101,8 +101,6 @@ public class PMovement : MonoBehaviour
 
     private void WallSlide()
     {
-        print("walled"+isWalled());
-        print("grounded"+isGrounded());
 
         if (isWalled() && !isGrounded())
         {

@@ -20,7 +20,7 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1) && cooldownTimer < castCooldown && playerMovement.canAttack())
+        if (Input.GetMouseButtonDown(1) && cooldownTimer > castCooldown && playerMovement.canAttack())
         {
             Cast();
         }
@@ -29,14 +29,14 @@ public class PlayerAttack : MonoBehaviour
         {
             Attack();
         }
-        cooldownTimer = Time.deltaTime;
+
+        cooldownTimer += Time.deltaTime;
 
     }
 
     private void Attack()
     {
         anim.SetTrigger("attack");
-        cooldownTimer = 0;
     }
 
     private void Cast()
