@@ -40,18 +40,45 @@ public class Health : MonoBehaviour
         {
             if (!dead)
             {
-                //player dead
+
                 anim.SetTrigger("die");
-                GetComponent<PMovement>().enabled = false;
+
+                //player
+                if (GetComponent<PMovement>() != null)
+                {
+                    GetComponent<PMovement>().enabled = false;
+                }
+
+
+                //Enemy
+                if (GetComponentInParent<EnemyPatrol>() != null)
+                {
+                    GetComponentInParent<EnemyPatrol>().enabled = false;
+                }
+
+                if (GetComponent<MeleeEnemy>() != null)
+                {
+                    GetComponent<MeleeEnemy>().enabled = false;
+
+                }
+
                 dead = true;
             }
         }
     }
 
 
-    public void AddHealth(float _value)
+    public bool AddHealth(float _value)
     {
-        currentHealth = Mathf.Clamp(currentHealth + _value, 0, startingHealth);
+        if (currentHealth < startingHealth)
+        {
+            currentHealth = Mathf.Clamp(currentHealth + _value, 0, startingHealth);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private IEnumerator Invulnerability() 
