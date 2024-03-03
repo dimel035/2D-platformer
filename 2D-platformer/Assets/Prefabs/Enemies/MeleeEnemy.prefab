@@ -152,6 +152,8 @@ MonoBehaviour:
   numberOfFlashes: 0
   components:
   - {fileID: 8089400379450638252}
+  hurtSound: {fileID: 8300000, guid: 5d61b9c02d513ad42bd3ebf5425cf42e, type: 3}
+  dieSound: {fileID: 8300000, guid: 011e58d5eee458941abc84597bb34d59, type: 3}
 --- !u!114 &8089400379450638252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,6 +174,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 1024
+  attackSound: {fileID: 8300000, guid: ce305dfef55fc0a4e86f588398e4af57, type: 3}
 --- !u!114 &9077636888752369608
 MonoBehaviour:
   m_ObjectHideFlags: 0

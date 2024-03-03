@@ -27,6 +27,9 @@ public class PMovement : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private Transform wallCheck;
 
+    [Header("Sounds")]
+    [SerializeField] private AudioClip jumpSound;
+
 
     private void Awake()
     {
@@ -43,6 +46,7 @@ public class PMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
             anim.SetTrigger("jump");
+            SoundManager.instance.PlaySound(jumpSound);
         }
 
         if(Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
@@ -124,6 +128,7 @@ public class PMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
         {
             isWallJumping= true;
+            SoundManager.instance.PlaySound(jumpSound);
             rb.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
 
