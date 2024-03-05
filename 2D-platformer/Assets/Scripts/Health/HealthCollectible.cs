@@ -5,6 +5,7 @@ using UnityEngine;
 public class HealthCollectible : MonoBehaviour
 {
     [SerializeField] private float healthValue;
+    [SerializeField] private AudioClip pickUpSound;
     private bool used;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -14,6 +15,7 @@ public class HealthCollectible : MonoBehaviour
             used = collision.GetComponent<Health>().AddHealth(healthValue);
             if (used)
             {
+                SoundManager.instance.PlaySound(pickUpSound);
                 gameObject.SetActive(false);
             }
         }
