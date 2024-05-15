@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PMovement : MonoBehaviour
+public class PMovement : MonoBehaviour, IDataPersistence
 {
     private float horizontal;
     private float speed = 8f;
@@ -36,6 +36,17 @@ public class PMovement : MonoBehaviour
         //Get refrerences from object
         anim = GetComponent<Animator>();
     }
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerPosition;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.playerPosition = this.transform.position;
+    }
+
     // Update is called once per frame
     void Update()
     {
