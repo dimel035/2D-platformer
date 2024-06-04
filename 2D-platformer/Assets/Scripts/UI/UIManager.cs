@@ -12,10 +12,14 @@ public class UIManager : MonoBehaviour
     [Header("Pause")]
     [SerializeField] private GameObject pauseScreen;
 
+    [Header("Help")]
+    [SerializeField] private GameObject helpScreen;
+
     private void Awake()
     {
         gameOverScreen.SetActive(false);
         pauseScreen.SetActive(false);
+
     }
 
     public void GameOver()
@@ -45,7 +49,7 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !helpScreen.activeInHierarchy)
         {
             if (pauseScreen.activeInHierarchy)
             {
@@ -55,8 +59,35 @@ public class UIManager : MonoBehaviour
             {
                 pauseGame(true);
             }
+
+        }
+        if(Input.GetKeyDown(KeyCode.F1) && !pauseScreen.activeInHierarchy)
+        {
+            if (helpScreen.activeInHierarchy)
+            {
+                showControls(false);
+            }
+            else
+            {
+                showControls(true);
+            }
         }
     }
+
+    public void showControls(bool status)
+    {
+        helpScreen.SetActive(status);
+
+        if (status)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    }
+
     public void pauseGame(bool status)
     {
         pauseScreen.SetActive(status);
