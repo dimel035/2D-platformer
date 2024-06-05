@@ -12,6 +12,7 @@ public class NextLevelPortal : MonoBehaviour
     [SerializeField] private Transform glow;
     [SerializeField] public Animator anim;
 
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player") {
@@ -27,6 +28,6 @@ public class NextLevelPortal : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        ll.LoadNextLevel();
+        ll.LoadNextLevel(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

@@ -15,10 +15,16 @@ public class UIManager : MonoBehaviour
     [Header("Help")]
     [SerializeField] private GameObject helpScreen;
 
+    [SerializeField] private GameObject endScreen;
+
+    [SerializeField] public LevelLoader ll;
+
     private void Awake()
     {
         gameOverScreen.SetActive(false);
         pauseScreen.SetActive(false);
+        helpScreen.SetActive(false);
+        endScreen.SetActive(false);
 
     }
 
@@ -30,7 +36,7 @@ public class UIManager : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        ll.LoadNextLevel(1);
     }
 
     public void MainMenu()

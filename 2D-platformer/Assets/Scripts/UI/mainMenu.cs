@@ -7,6 +7,7 @@ public class mainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject mainMenuScreen;
     [SerializeField] private GameObject optionsMenuScreen;
+    [SerializeField] public LevelLoader ll;
     private void Awake()
     {
         mainMenuScreen.SetActive(true);
@@ -16,7 +17,7 @@ public class mainMenu : MonoBehaviour
     //main menu
     public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
+        ll.LoadNextLevel(1);
     }
 
     public void Options()
