@@ -8,16 +8,30 @@ public class mainMenu : MonoBehaviour
     [SerializeField] private GameObject mainMenuScreen;
     [SerializeField] private GameObject optionsMenuScreen;
     [SerializeField] public LevelLoader ll;
+
+    SaveManager sm;
     private void Awake()
     {
         mainMenuScreen.SetActive(true);
         optionsMenuScreen.SetActive(false);
+        sm = new SaveManager();
     }
 
     //main menu
     public void PlayGame()
     {
+        PlayerPrefs.SetInt("GameState", 0); // 0 for new game
+        PlayerPrefs.Save();
         ll.LoadNextLevel(1);
+    }
+
+    public void Resume()
+    {
+        PlayerPrefs.SetInt("GameState", 1); // 1 for resume
+        PlayerPrefs.Save();
+        StuffToSave myStuff = sm.LoadStuff();
+        ll.LoadNextLevel(myStuff.level);
+        Debug.Log("levelinmenu:"+myStuff.level.ToString());
     }
 
     public void Options()

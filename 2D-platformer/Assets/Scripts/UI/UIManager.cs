@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
 
     public void Restart()
     {
-        ll.LoadNextLevel(1);
+        SceneManager.LoadScene(1);
     }
 
     public void MainMenu()

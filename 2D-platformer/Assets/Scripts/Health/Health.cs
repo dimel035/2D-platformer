@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Health : MonoBehaviour, IDataPersistence
+public class Health : MonoBehaviour
 {
    [Header ("Health")]
-   [SerializeField] private float startingHealth;
+   [SerializeField] public float startingHealth;
 
     public float currentHealth {get; private set;}
     private Animator anim;
@@ -25,30 +26,77 @@ public class Health : MonoBehaviour, IDataPersistence
     [SerializeField] private AudioClip dieSound;
 
     private bool invulnerable;
+    public StuffToSave myStuff;
+    SaveManager sm = new SaveManager();
 
 
 
     private void Awake()
     {
-        currentHealth = startingHealth;
+        
         anim = GetComponent<Animator>();
         spriteRend= GetComponent<SpriteRenderer>();
-    }
-    public void LoadData(GameData data)
-    {
-        this.currentHealth = data.currentHealth;
+        myStuff = sm.LoadStuff();
+        if (PlayerPrefs.HasKey("GameState"))
+        {
+            int gameState = PlayerPrefs.GetInt("GameState");
+            if (gameState == 1)
+            {
+                if (myStuff == null)
+                {
+                    currentHealth = startingHealth;
+                    if (gameObject.name == "Player")
+                    {
+                        myStuff.currentHealth = currentHealth;
+                        myStuff.level = SceneManager.GetActiveScene().buildIndex;
+                        myStuff.lastCheckpoint = "";
+                        sm.SaveStuff(myStuff);
+                    }
+                }
+                else
+                {
+                    currentHealth = myStuff.currentHealth;
+                    if (gameObject.name == "Player")
+                    {
+                        GameObject lastcheck = GameObject.Find(myStuff.lastCheckpoint);
+                        GameObject player = GameObject.Find("Player");
+                        player.transform.position = lastcheck.transform.position;
+                    }
+                }
+            }
+            else if (gameState == 0)
+            {
+                currentHealth = startingHealth;
+                if (gameObject.name == "Player")
+                {
+                    myStuff.currentHealth = currentHealth;
+                    myStuff.level = SceneManager.GetActiveScene().buildIndex;
+                    myStuff.lastCheckpoint = "";
+                    sm.SaveStuff(myStuff);
+                }
+            }
+        }
+        else
+        {
+            currentHealth = startingHealth;
+            myStuff.currentHealth = currentHealth;
+            myStuff.level = SceneManager.GetActiveScene().buildIndex;
+            myStuff.lastCheckpoint = "";
+        }
+        
+        Debug.Log("checkpointinhealth:" + myStuff.lastCheckpoint.ToString());
+        Debug.Log("healthinhealth:" + myStuff.currentHealth.ToString());
+        Debug.Log("levelinhealth:" + myStuff.level.ToString());
     }
 
-    public void SaveData(GameData data)
-    {
-        data.currentHealth = this.currentHealth;
-    }
 
     public void TakeDamage(float _damage)
     {
         if (invulnerable) return;
         currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
-        if(currentHealth > 0)
+        myStuff.currentHealth = currentHealth;
+        Debug.Log("healthinhealth:" + myStuff.currentHealth.ToString());
+        if (currentHealth > 0)
         {
             //player hurt
             anim.SetTrigger("hurt");
@@ -81,12 +129,15 @@ public class Health : MonoBehaviour, IDataPersistence
         if (currentHealth < startingHealth)
         {
             currentHealth = Mathf.Clamp(currentHealth + _value, 0, startingHealth);
+            myStuff.currentHealth = currentHealth;
+            Debug.Log("healthinhealth:" + myStuff.currentHealth.ToString());
             return true;
         }
         else
         {
             return false;
         }
+        
     }
 
     private IEnumerator Invulnerability() 
