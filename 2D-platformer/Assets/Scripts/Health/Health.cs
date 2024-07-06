@@ -60,7 +60,10 @@ public class Health : MonoBehaviour
                     {
                         GameObject lastcheck = GameObject.Find(myStuff.lastCheckpoint);
                         GameObject player = GameObject.Find("Player");
-                        player.transform.position = lastcheck.transform.position;
+                        if (lastcheck != null)
+                        {
+                            player.transform.position = lastcheck.transform.position;
+                        }
                     }
                 }
             }

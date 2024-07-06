@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using UnityEditor.Timeline;
 using UnityEngine;
 
 public class EnemyProjectile : EnemyDamage //damage player every time

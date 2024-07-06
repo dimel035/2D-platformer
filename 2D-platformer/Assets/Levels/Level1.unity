@@ -20183,6 +20183,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4480177175372707774, guid: 509d5c2d1feeceb4aa24bbb4c08a4611, type: 3}
+      propertyPath: ll
+      value: 
+      objectReference: {fileID: 2033746761}
+    - target: {fileID: 4480177175372707774, guid: 509d5c2d1feeceb4aa24bbb4c08a4611, type: 3}
       propertyPath: endScreen
       value: 
       objectReference: {fileID: 1156471059}

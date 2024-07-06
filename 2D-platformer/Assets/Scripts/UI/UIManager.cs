@@ -41,7 +41,9 @@ public class UIManager : MonoBehaviour
 
     public void MainMenu()
     {
-        SceneManager.LoadScene(0);
+        /*SceneManager.LoadScene(0);*/
+        pauseGame(false);
+        ll.LoadNextLevel(0);
     }
 
     public void Quit()

@@ -7,8 +7,7 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class NextLevelPortal : MonoBehaviour
 {
-    SaveManager sm = new SaveManager();
-
+    
     [SerializeField] public LevelLoader ll;
     [SerializeField] private AudioClip NextLevelSound;
     [SerializeField] private Transform glow;
@@ -21,19 +20,21 @@ public class NextLevelPortal : MonoBehaviour
     {
         if (collision.tag == "Player") {
 
+            SaveManager sm = gameObject.AddComponent<SaveManager>();
+            playerHealth = (Health)collision.GetComponent<Health>();
             myStuff = playerHealth.myStuff;
+            myStuff.level = SceneManager.GetActiveScene().buildIndex;
+            myStuff.currentHealth = playerHealth.currentHealth;
             myStuff.lastCheckpoint = "";
+            Debug.Log("checkpoint:" + myStuff.lastCheckpoint.ToString());
+            sm.SaveStuff(myStuff);
             Debug.Log("lastCheckpointinrespawn:" + myStuff.lastCheckpoint.ToString());
             Debug.Log("healthrespawn:" + myStuff.currentHealth.ToString());
             Debug.Log("levelinrespawn:" + myStuff.level.ToString());
 
             anim.SetTrigger("portalOpen");
 
-            myStuff.level = SceneManager.GetActiveScene().buildIndex;
-            myStuff.currentHealth = playerHealth.currentHealth;
-            myStuff.lastCheckpoint = "";
-            Debug.Log("checkpoint:" + myStuff.lastCheckpoint.ToString());
-            sm.SaveStuff(myStuff);
+
 
             StartCoroutine(LoadLevel());
         }
